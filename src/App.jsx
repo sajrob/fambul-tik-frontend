@@ -1,21 +1,27 @@
+// src/App.jsx
+
 import { useState } from "react";
 import AddMemberForm from "./components/AddMemberForm";
 import MemberList from "./components/MemberList";
-import AddRelationshipForm from "./components/AddRelationshipForm"; // Import the new component
+import AddRelationshipForm from "./components/AddRelationshipForm";
+import RelationshipList from "./components/RelationshipList";
 
 function App() {
-  const [refreshMembersTrigger, setRefreshMembersTrigger] = useState(0); // State to trigger MemberList refresh
+  const [refreshMembersTrigger, setRefreshMembersTrigger] = useState(0);
+  const [refreshRelationshipsTrigger, setRefreshRelationshipsTrigger] =
+    useState(0);
 
   const handleMemberAdded = () => {
-    setRefreshMembersTrigger((prev) => prev + 1); // Increment to trigger refresh
+    setRefreshMembersTrigger((prev) => prev + 1);
   };
 
   const handleRelationshipAdded = () => {
-    // You might want to trigger a refresh of a relationship list here later
-    // For now, we just acknowledge it.
-    console.log(
-      "Relationship added. Consider refreshing relationship list if displayed."
-    );
+    setRefreshRelationshipsTrigger((prev) => prev + 1); // Trigger for Add
+  };
+
+  // New handler for relationship deletion
+  const handleRelationshipDeleted = () => {
+    setRefreshRelationshipsTrigger((prev) => prev + 1); // Trigger for Delete
   };
 
   return (
@@ -35,13 +41,18 @@ function App() {
         </section>
 
         <section>
-          <AddRelationshipForm onRelationshipAdded={handleRelationshipAdded} />{" "}
-          {/* Render the new form */}
+          <AddRelationshipForm onRelationshipAdded={handleRelationshipAdded} />
         </section>
 
         <section>
-          <MemberList key={refreshMembersTrigger} />{" "}
-          {/* Use key to force remount/re-fetch */}
+          <MemberList key={refreshMembersTrigger} />
+        </section>
+
+        <section>
+          <RelationshipList
+            key={refreshRelationshipsTrigger} // Key to force refresh
+            onRelationshipDeleted={handleRelationshipDeleted} // Pass the new handler
+          />
         </section>
       </main>
     </div>

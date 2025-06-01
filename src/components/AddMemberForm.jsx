@@ -80,7 +80,7 @@ function AddMemberForm() {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
+    <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4 border-2 border-blue-400">
       <h2 className="text-2xl font-bold text-gray-900 text-center">
         Add New Family Member
       </h2>
